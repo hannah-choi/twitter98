@@ -1,5 +1,6 @@
 import React from "react";
 import { Tweet } from "../../model/model";
+import Avatar from "../Avatar/Avatar";
 
 type Props = {
     tweet: Tweet;
@@ -10,6 +11,7 @@ export const TweetCard = ({ tweet }: Props) => {
 
     return (
         <article>
+            <Avatar url={url} nickname={nickname} />
             <div>
                 <p>
                     <span>{nickname}</span>
@@ -17,9 +19,6 @@ export const TweetCard = ({ tweet }: Props) => {
                     <span>{created}</span>
                 </p>
                 <p>{text}</p>
-            </div>
-            <div>
-                <img src={url} alt='profile' />
             </div>
         </article>
     );
