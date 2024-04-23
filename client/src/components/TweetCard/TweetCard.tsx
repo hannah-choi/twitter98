@@ -4,22 +4,24 @@ import Avatar from "../Avatar/Avatar";
 
 type Props = {
     tweet: Tweet;
+    onDelete: (tweetId: number) => void;
+    onNicknameClick: (tweet: Tweet) => void;
 };
 
-export const TweetCard = ({ tweet }: Props) => {
-    const { text, userid, nickname, created, url } = tweet;
+export const TweetCard = React.memo(({ tweet, onDelete, onNicknameClick }: Props) => {
+    const { id, userid, nickname, url, text, created } = tweet;
 
     return (
-        <article>
+        <li>
             <Avatar url={url} nickname={nickname} />
-            <div>
+            <section>
                 <p>
-                    <span>{nickname}</span>
+                    <span onClick={() => onNicknameClick(tweet)}>{nickname}</span>
                     <span>@{userid}</span>
                     <span>{created}</span>
                 </p>
                 <p>{text}</p>
-            </div>
-        </article>
+            </section>
+        </li>
     );
-};
+});

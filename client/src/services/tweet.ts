@@ -1,10 +1,10 @@
 import { Tweet } from "../model/model";
 import moment from "moment";
 
-interface ITweetService {
-    getTweets: (nickname: string) => Promise<Tweet[]>;
+export interface ITweetService {
+    getTweets: (nickname?: string) => Promise<Tweet[]>;
     writeTweet: (text: string) => Promise<Tweet>;
-    deleteTweet: (tweetId: number) => void;
+    deleteTweet: (tweetId: number) => Promise<void>;
     updateTweet: (tweetId: number, text: string) => Promise<Tweet>;
 }
 
@@ -42,7 +42,7 @@ export default class TweetService implements ITweetService {
         }
     ];
 
-    async getTweets(nickname: string) {
+    async getTweets(nickname?: string) {
         return nickname ? this.tweets.filter((tweet) => tweet.nickname === nickname) : this.tweets;
     }
 

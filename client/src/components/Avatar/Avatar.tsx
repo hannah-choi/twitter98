@@ -5,8 +5,8 @@ type Props = {
     url?: string;
 };
 
-const Avatar = ({ url, nickname }: Props) => {
-    return <div>Avatar</div>;
-};
+const Avatar = React.memo(({ url, nickname }: Props) => {
+    return <figure>Avatar</figure>;
+});
 
 export default Avatar;
