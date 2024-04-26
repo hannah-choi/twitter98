@@ -28,8 +28,8 @@ export default class TweetService implements ITweetService {
             id: 2,
             text: "sit dolor amet",
             created: "21 Sun",
-            nickname: "Lobo",
-            userid: "lobo",
+            nickname: "Ashcona",
+            userid: "orangejuice1234",
             url: ""
         },
         {
@@ -38,6 +38,22 @@ export default class TweetService implements ITweetService {
             created: "22 Sun",
             nickname: "Nana",
             userid: "nana",
+            url: ""
+        },
+        {
+            id: 4,
+            text: "Just a perfect day. Drink sangria in a park, And then later When it gets dark we go home.",
+            created: "22 Sun",
+            nickname: "Miguel",
+            userid: "miguel_1234",
+            url: ""
+        },
+        {
+            id: 5,
+            text: "미안해 솔직하지 못한 내가 지금 이 순간이 꿈이라면 살며시 너에게로 다가와 모든걸 고백할텐데",
+            created: "22 Sun",
+            nickname: "세일러문",
+            userid: "sailor_1234",
             url: ""
         }
     ];

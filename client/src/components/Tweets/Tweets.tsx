@@ -1,28 +1,30 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Tweet } from "../../model/model";
 import { TweetCard } from "../TweetCard/TweetCard";
-import { useHistory } from "react-router-dom";
-import TweetWriter from "../TweetWriter/TweetWriter";
 import { ITweetService } from "../../services/tweet";
 import Message from "../Message/Message";
+import { useHistory } from "react-router-dom";
+import TweetWriter from "../TweetWriter/TweetWriter";
+
+import styles from "./Tweets.module.scss";
 
 type Props = {
     tweetService: ITweetService;
-    writable: boolean;
-    nickname?: string;
+    userid?: string;
+    writable?: boolean;
 };
 
-const Tweets = React.memo(({ tweetService, writable, nickname }: Props) => {
+const Tweets = React.memo(({ tweetService, userid, writable = false }: Props) => {
     const [tweets, setTweets] = useState<Tweet[]>([]);
     const [error, setError] = useState<string>("");
     const history = useHistory();
 
     useEffect(() => {
         tweetService
-            .getTweets(nickname)
+            .getTweets()
             .then((tweets) => setTweets([...tweets]))
             .catch(onError);
-    }, [tweetService, nickname]);
+    }, [tweetService]);
 
     const onCreate = (tweet: Tweet) => {
         setTweets((tweets) => [tweet, ...tweets]);
@@ -34,8 +36,6 @@ const Tweets = React.memo(({ tweetService, writable, nickname }: Props) => {
             .then(() => setTweets((tweets) => tweets.filter((tweet) => tweet.id !== tweetId)))
             .catch((error: Error) => setError(error.toString()));
 
-    const onNicknameClick = (tweet: Tweet) => history.push(`/${tweet.nickname}`);
-
     const onError = (error: Error) => {
         setError(error.toString());
         setTimeout(() => {
@@ -43,14 +43,16 @@ const Tweets = React.memo(({ tweetService, writable, nickname }: Props) => {
         }, 3000);
     };
 
+    const onUserIdClick = (tweet: Tweet) => history.push(`/${tweet.userid}`);
+
     return (
         <>
-            {writable && <TweetWriter tweetService={tweetService} onError={onError} onCreate={onCreate} />}
+            {writable && <TweetWriter tweetService={tweetService} onCreate={onCreate} onError={onError} />}
             {error && <Message text={error} isAlert={true} />}
             {tweets.length === 0 && <p className='tweets-empty'>No Tweets Yet</p>}
-            <ul>
+            <ul className={styles.tweetsContainer}>
                 {tweets.map((tweet) => (
-                    <TweetCard key={tweet.id} tweet={tweet} onDelete={onDelete} onNicknameClick={onNicknameClick} />
+                    <TweetCard key={tweet.id} tweet={tweet} onDelete={onDelete} onUserIdClick={onUserIdClick} />
                 ))}
             </ul>
         </>

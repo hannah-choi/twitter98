@@ -1,0 +1,59 @@
+.tweetCard {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem;
+}
+
+.contentsContainer {
+    width: 90%;
+    padding: 0 0 0 0.5rem;
+}
+
+.infoContainer {
+    line-height: 1rem;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.1rem;
+    align-items: center;
+}
+
+.nickname {
+    margin-right: 0.5rem;
+}
+
+.userid {
+    font-size: 11px;
+    color: #808080;
+}
+
+.created {
+    font-size: 0.6875rem;
+}
+
+.buttonContainer {
+    margin-top: 0.7rem;
+    display: flex;
+    justify-content: space-between;
+
+    article {
+        display: flex;
+    }
+}
+
+.controlButton {
+    p {
+        margin-left: 0.3rem;
+    }
+
+    flex-direction: row;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    min-width: unset;
+    min-height: unset;
+    padding: unset;
+    min-width: 24px;
+    height: 24px;
+    padding: 0 0.4rem;
+}

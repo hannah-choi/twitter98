@@ -1,11 +1,12 @@
 import React from "react";
-import "./App.css";
 import Header from "./components/Header/Header";
 import { Route, Switch } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import { ITweetService } from "./services/tweet";
 import AllTweets from "./pages/AllTweets";
 import UserTweets from "./pages/UserTweets";
+import classNames from "classnames";
+import styles from "./App.module.scss";
 
 type Props = {
     tweetService: ITweetService;
@@ -13,11 +14,11 @@ type Props = {
 
 function App({ tweetService }: Props) {
     return (
-        <div className='App'>
+        <div className={classNames(styles.app, "window")}>
             <Header />
             <Navbar />
             <Switch>
-                <main>
+                <main className={styles.main}>
                     <Route exact path='/'>
                         <AllTweets tweetService={tweetService} />
                     </Route>

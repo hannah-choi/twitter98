@@ -8,8 +8,8 @@ type Props = {
 };
 
 const UserTweets = ({ tweetService }: Props) => {
-    const { nickname } = useParams<{ nickname: string }>();
-    return <Tweets tweetService={tweetService} nickname={nickname} writable={false} />;
+    const { userid } = useParams<{ userid: string }>();
+    return <Tweets tweetService={tweetService} userid={userid} />;
 };
 
 export default UserTweets;

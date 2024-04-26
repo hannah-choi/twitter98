@@ -7,7 +7,7 @@ type Props = {
 };
 
 const AllTweets = ({ tweetService }: Props) => {
-    return <Tweets tweetService={tweetService} writable />;
+    return <Tweets tweetService={tweetService} writable={true} />;
 };
 
 export default AllTweets;

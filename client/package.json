@@ -15,7 +15,7 @@
         "react-hook-form": "^7.51.3",
         "react-router-dom": "^5.3.4",
         "react-scripts": "5.0.1",
-        "typescript": "^4.4.2",
+        "typescript": "^5.4.4",
         "web-vitals": "^2.1.0"
     },
     "scripts": {
@@ -45,6 +45,10 @@
     "devDependencies": {
         "@types/react-portal": "^4.0.7",
         "@types/react-router-dom": "^5.3.3",
-        "moment": "^2.30.1"
+        "classnames": "^2.5.1",
+        "franc": "^6.2.0",
+        "moment": "^2.30.1",
+        "sass": "^1.75.0",
+        "typescript-plugin-css-modules": "^5.1.0"
     }
 }

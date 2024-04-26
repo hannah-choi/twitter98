@@ -4,8 +4,63 @@ body {
         "Droid Sans", "Helvetica Neue", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+
+    a {
+        color: inherit;
+        text-decoration: none;
+    }
+
+    p,
+    h1,
+    h2,
+    h3,
+    h4,
+    div,
+    ul,
+    section,
+    figure,
+    article,
+    main,
+    nav,
+    header,
+    footer,
+    label,
+    div,
+    li {
+        padding: 0;
+        margin: 0;
+    }
+
+    p {
+        word-break: break-all;
+    }
+}
+
+* {
+    box-sizing: border-box;
 }
 
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+@font-face {
+    font-family: "DungGeunMo";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "toshiba";
+    src: url("./fonts/Web437_ToshibaSat_9x16.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "IyagiGGC";
+    src: url("https://cdn.jsdelivr.net/gh/JuwanPark/IyagiGGC@latest/IyagiGGC.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
 }

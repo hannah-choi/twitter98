@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Button from "../Button/Button";
 import { ITweetService } from "../../services/tweet";
 import { Tweet } from "../../model/model";
+import styles from "./TweetWriter.module.scss";
+import Divider from "../Divider/Divider";
 
 type Props = {
     tweetService: ITweetService;
@@ -28,7 +30,7 @@ const TweetWriter = ({ tweetService, onCreate, onError }: Props) => {
     };
 
     return (
-        <section>
+        <section className={styles.tweetWriter}>
             <form onSubmit={onSubmit}>
                 <input
                     type='text'

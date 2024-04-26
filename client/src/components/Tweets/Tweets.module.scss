@@ -1,0 +1,7 @@
+@use "../../styles/variables.scss" as mixin;
+
+.tweetsContainer {
+    padding: 0.2rem;
+
+    @include mixin.innerShadow;
+}
