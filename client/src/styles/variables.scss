@@ -18,3 +18,7 @@
     box-shadow: inset -1px -1px 0px #0a0a0a, inset 1px 1px 0px #ffffff, inset -2px -2px 0px #808080,
         inset 2px 2px 0px #dfdfdf;
 }
+
+@mixin inset {
+    box-shadow: inset -1px -1px 0px #dfdfdf, inset 1px 1px 0px #808080;
+}

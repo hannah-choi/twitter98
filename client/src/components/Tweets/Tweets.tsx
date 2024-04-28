@@ -7,6 +7,7 @@ import { useHistory } from "react-router-dom";
 import TweetWriter from "../TweetWriter/TweetWriter";
 
 import styles from "./Tweets.module.scss";
+import UserProfile from "../UserProfile/UserProfile";
 
 type Props = {
     tweetService: ITweetService;
@@ -47,6 +48,7 @@ const Tweets = React.memo(({ tweetService, userid, writable = false }: Props) =>
 
     return (
         <>
+            {!writable && userid && <UserProfile userid={userid} />}
             {writable && <TweetWriter tweetService={tweetService} onCreate={onCreate} onError={onError} />}
             {error && <Message text={error} isAlert={true} />}
             {tweets.length === 0 && <p className='tweets-empty'>No Tweets Yet</p>}
