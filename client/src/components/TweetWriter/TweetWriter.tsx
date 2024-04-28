@@ -40,7 +40,7 @@ const TweetWriter = ({ tweetService, onCreate, onError }: Props) => {
                     autoFocus
                     onChange={onChange}
                 />
-                <Button text='Tweet' type='submit' />
+                <Button type='submit'>Submit</Button>
             </form>
         </section>
     );

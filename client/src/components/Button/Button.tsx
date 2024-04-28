@@ -1,12 +1,18 @@
 import React from "react";
 
 type Props = {
-    text: string;
+    children: React.ReactNode;
+    onClick?: () => void;
+    className?: string;
     type?: "button" | "submit";
 };
 
-const Button = ({ text, type }: Props) => {
-    return <button type={type || "button"}>{text}</button>;
+const Button = ({ type, onClick, children, className }: Props) => {
+    return (
+        <button type={type || "button"} onClick={() => onClick} className={className}>
+            {children}
+        </button>
+    );
 };
 
 export default Button;

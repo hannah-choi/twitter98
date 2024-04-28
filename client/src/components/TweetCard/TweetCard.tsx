@@ -9,6 +9,7 @@ import { ReactComponent as Heart } from "../../icons/Heart/Heart.svg";
 import { ReactComponent as Comment } from "../../icons/Comment/Comment.svg";
 import { ReactComponent as Retweet } from "../../icons/Retweet/Retweet.svg";
 import { ReactComponent as ThreeDots } from "../../icons/ThreeDots/ThreeDots.svg";
+import Button from "../Button/Button";
 
 type Props = {
     tweet: Tweet;
@@ -27,7 +28,7 @@ export const TweetCard = React.memo(({ tweet, onDelete, onUserIdClick }: Props) 
                     <section>
                         <article className={styles.infoContainer}>
                             <p>
-                                <LangFontConverter title={true}>
+                                <LangFontConverter type='nickname-small'>
                                     <span className={styles.nickname} onClick={() => onUserIdClick(tweet)}>
                                         {nickname}
                                     </span>
@@ -42,19 +43,19 @@ export const TweetCard = React.memo(({ tweet, onDelete, onUserIdClick }: Props) 
                     </section>
                     <section className={styles.buttonContainer}>
                         <article>
-                            <button className={classNames("title-bar-controls", styles.controlButton)}>
+                            <Button className={classNames("title-bar-controls", styles.controlButton)}>
                                 <Comment />
-                            </button>
-                            <button className={styles.controlButton}>
+                            </Button>
+                            <Button className={styles.controlButton}>
                                 <Retweet />
-                            </button>
-                            <button className={styles.controlButton}>
+                            </Button>
+                            <Button className={styles.controlButton}>
                                 <Heart />
-                            </button>
+                            </Button>
                         </article>
-                        <button className={styles.controlButton}>
+                        <Button className={styles.controlButton}>
                             <ThreeDots />
-                        </button>
+                        </Button>
                     </section>
                 </div>
             </li>

@@ -5,27 +5,28 @@ import { ReactComponent as WriteTweet } from "../../icons/WriteTweet/WriteTweet.
 import { ReactComponent as Search } from "../../icons/Search/Search.svg";
 import { ReactComponent as User } from "../../icons/User/User.svg";
 import styles from "./Navbar.module.scss";
+import Button from "../Button/Button";
 
 type Props = {};
 
 const Navbar = (props: Props) => {
     return (
         <nav className={styles.nav}>
-            <button className={styles.navButton}>
+            <Button className={styles.navButton}>
                 <Homepage />
-            </button>
-            <button className={styles.navButton}>
+            </Button>
+            <Button className={styles.navButton}>
                 <Message />
-            </button>
-            <button className={styles.navButton}>
+            </Button>
+            <Button className={styles.navButton}>
                 <WriteTweet />
-            </button>
-            <button className={styles.navButton}>
+            </Button>
+            <Button className={styles.navButton}>
                 <Search />
-            </button>
-            <button className={styles.navButton}>
+            </Button>
+            <Button className={styles.navButton}>
                 <User />
-            </button>
+            </Button>
         </nav>
     );
 };
