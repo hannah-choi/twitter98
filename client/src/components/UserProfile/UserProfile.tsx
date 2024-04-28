@@ -9,11 +9,10 @@ const UserProfile = ({ userid, url }: Props) => {
         <section className={styles.profile}>
             <article className={styles.bg} style={{ backgroundImage: `url(${"./images/bg.jpg"})` }} />
             <article className={styles.contents}>
-                <figure
-                    className={styles.profilePicture}
-                    style={{ backgroundImage: `url(${"./images/cat-pic.jpg"})` }}
-                />
-                <h3 className={styles.nickname}>nickname</h3>
+                <figure className={styles.profilePicture} style={{ backgroundImage: `url(${"./images/lola.png"})` }} />
+                <LangFontConverter type='nickname-big'>
+                    <p className={styles.nickname}>nickname</p>
+                </LangFontConverter>
                 <p className={styles.userId}>@{userid}</p>
                 <LangFontConverter>
                     <p>Et Lorem consequat aute laborum magna culpa qui consectetur quis laborum.</p>

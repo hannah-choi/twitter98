@@ -7,6 +7,8 @@ import AllTweets from "./pages/AllTweets";
 import UserTweets from "./pages/UserTweets";
 import classNames from "classnames";
 import styles from "./App.module.scss";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 type Props = {
     tweetService: ITweetService;
@@ -15,7 +17,7 @@ type Props = {
 function App({ tweetService }: Props) {
     return (
         <div className={classNames(styles.app, "window")}>
-            <Header />
+            <Header title='Twitter 98' />
             <Navbar />
             <Switch>
                 <main className={styles.main}>
@@ -24,6 +26,12 @@ function App({ tweetService }: Props) {
                     </Route>
                     <Route exact path='/:userid'>
                         <UserTweets tweetService={tweetService} />
+                    </Route>
+                    <Route exact path='/login'>
+                        <Login />
+                    </Route>
+                    <Route exact path='/register'>
+                        <Register />
                     </Route>
                 </main>
             </Switch>

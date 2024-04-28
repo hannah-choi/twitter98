@@ -9,7 +9,7 @@ type Props = {
 
 const Button = ({ type, onClick, children, className }: Props) => {
     return (
-        <button type={type || "button"} onClick={() => onClick} className={className}>
+        <button type={type || "button"} onClick={onClick} className={className}>
             {children}
         </button>
     );

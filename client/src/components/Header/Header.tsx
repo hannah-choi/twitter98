@@ -6,20 +6,24 @@ import { ReactComponent as Close } from "../../icons/Close/Close.svg";
 import classNames from "classnames";
 import Button from "../Button/Button";
 
-type Props = {};
-const Header = (props: Props) => {
+type Props = { simplified?: boolean; title: string; onClose?: () => void };
+const Header = ({ simplified = false, title, onClose }: Props) => {
     return (
         <header>
             <section className={classNames(styles.statusbar, "title-bar")}>
-                <p className='title-bar-text'>Twitter 98</p>
+                <p className='title-bar-text'>{title}</p>
                 <div className='title-bar-controls'>
-                    <Button className={styles.controlButton}>
-                        <Minimise />
-                    </Button>
-                    <Button className={styles.controlButton}>
-                        <Maximise />
-                    </Button>
-                    <Button className={styles.controlButton}>
+                    {!simplified && (
+                        <>
+                            <Button className={styles.controlButton}>
+                                <Minimise />
+                            </Button>
+                            <Button className={styles.controlButton}>
+                                <Maximise />
+                            </Button>
+                        </>
+                    )}
+                    <Button className={styles.controlButton} onClick={onClose}>
                         <Close />
                     </Button>
                 </div>

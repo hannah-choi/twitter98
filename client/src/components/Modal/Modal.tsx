@@ -1,25 +1,12 @@
-import { useEffect, useRef, ReactNode } from "react";
+import { ReactNode } from "react";
 import { createPortal } from "react-dom";
-
-const modalRoot = document.querySelector("#modal-root") as HTMLElement;
-
+import styles from "./Modal.module.scss";
 type Props = {
     children: ReactNode;
 };
 
 const Modal = ({ children }: Props) => {
-    const ref = useRef<HTMLDivElement | null>(null);
-    if (!ref.current) ref.current = document.createElement("div");
-
-    useEffect(() => {
-        const el = ref.current!;
-        modalRoot.appendChild(el);
-        return () => {
-            modalRoot.removeChild(el);
-        };
-    }, []);
-
-    return createPortal(children, ref.current);
+    return <div className={styles.modal}>{createPortal(children, document.body)}</div>;
 };
 
 export default Modal;

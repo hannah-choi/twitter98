@@ -1,9 +1,11 @@
 import React, { ReactNode } from "react";
 import { franc } from "franc";
 
-type Props = { children: ReactNode; title?: boolean };
+type Type = "nickname-small" | "body" | "nickname-big";
 
-const LangFontConverter = ({ children, title = false }: Props) => {
+type Props = { children: ReactNode; type?: Type };
+
+const LangFontConverter = ({ children, type = "body" }: Props) => {
     const extractText = (node: ReactNode): string => {
         if (typeof node === "string") {
             return node;
@@ -13,16 +15,28 @@ const LangFontConverter = ({ children, title = false }: Props) => {
         return "";
     };
 
-    const langCode = franc(extractText(children), { minLength: 3 });
+    const langCode = franc(extractText(children), { minLength: 2 });
+
+    const getFontSize = () => {
+        if (type === "nickname-big") {
+            return langCode === "kor" ? "2rem" : "22px";
+        } else if (type === "body" && langCode !== "kor") {
+            return "15px";
+        } else {
+            return "inherit";
+        }
+    };
 
     const computedStyle = {
         display: "inline",
-        fontFamily: `${langCode === "kor" ? "DungGeunMo, sans-serif" : title ? "inherit" : "toshiba"}`,
-        fontSize: `${langCode === "kor" || !title ? "inherit" : "15px"}`,
-        fontWeight: `${title ? "bold" : "500"}`
+        fontFamily: `${langCode === "kor" ? "DungGeunMo, sans-serif" : type === "body" ? "toshiba" : "inherit"}`,
+        fontSize: `${getFontSize()}`,
+        fontWeight: `${type !== "body" ? "bold" : "500"}`
     };
 
-    return <div style={computedStyle}>{children}</div>;
+    console.log("Computed Font Size for type:", type, "is:", getFontSize());
+
+    return <p style={computedStyle}>{children}</p>;
 };
 
 export default LangFontConverter;
