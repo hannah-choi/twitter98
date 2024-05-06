@@ -65,6 +65,7 @@ const Tweets = React.memo(({ tweetService, userid, writable = false }: Props) =>
             {error && <Message text={error} isAlert={true} />}
             {tweets.length === 0 && <p className='tweets-empty'>No Tweets Yet</p>}
             <ul className={styles.tweetsContainer}>
+                {tweets.length === 0 && <p>No tweets yet</p>}
                 {tweets.map((tweet) => (
                     <TweetCard key={tweet.id} tweet={tweet} onDelete={onDelete} onUserIdClick={onUserIdClick} />
                 ))}

@@ -61,7 +61,7 @@ const Login = ({ onRegister, onLogin }: Props) => {
             {showModal && (
                 <Modal>
                     <ModalContents>
-                        <Header title={signup ? "Register" : "Log in"} simplified onClose={onClose} />
+                        <Header title={signup ? "Register" : "Login"} simplified closeDisabled />
                         <form onSubmit={handleSubmit((data) => onSubmit(data))}>
                             <p>
                                 <label>Userid</label>
@@ -105,8 +105,12 @@ const Login = ({ onRegister, onLogin }: Props) => {
                                     </fieldset>
                                 </>
                             )}
-                            <Button type='submit'>{signup ? "Register" : "Sign In"}</Button>
-                            <Button onClick={() => setSignup(true)}>Register</Button>
+                            <article>
+                                <Button type='submit'>{signup ? "Register" : "Sign In"}</Button>
+                                <Button onClick={() => setSignup(!signup)}>
+                                    {signup ? "Already have an account?" : "Join Us"}
+                                </Button>
+                            </article>
                         </form>
                     </ModalContents>
                 </Modal>
