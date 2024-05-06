@@ -17,7 +17,22 @@ type Props = {
     children: React.ReactNode;
 };
 
-const AuthContext = createContext({});
+type AuthContextType = {
+    user: AuthCredential | undefined;
+    signUp: (
+        userid: string,
+        password: string,
+        nickname: string,
+        email: string,
+        avatar?: string,
+        bg?: string,
+        bio?: string
+    ) => Promise<void>;
+    logIn: (userid: string, password: string) => Promise<void>;
+    logout: () => Promise<void>;
+};
+
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 const contextRef = createRef();
 
@@ -85,4 +100,10 @@ export function AuthProvider({ authService, authErrorEventBus, children }: Props
 
 export default AuthContext;
 export const fetchToken = () => contextRef.current;
-export const useAuth = () => useContext(AuthContext);
+export const useAuth = () => {
+    const context = useContext(AuthContext);
+    if (!context) {
+        throw new Error("useAuth must be used within an AuthProvider");
+    }
+    return context;
+};

@@ -1,10 +1,11 @@
 .nav {
     display: flex;
+    justify-content: space-around;
 }
 
 .navButton {
+    flex: 1;
     min-width: unset;
     padding: unset;
-    width: 20%;
     margin: 0.2rem 0;
 }

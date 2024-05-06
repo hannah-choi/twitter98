@@ -18,11 +18,12 @@ type Props = {
 const Tweets = React.memo(({ tweetService, userid, writable = false }: Props) => {
     const [tweets, setTweets] = useState<Tweet[]>([]);
     const [error, setError] = useState<string>("");
+    const [showWriter, setShowWriter] = useState<boolean>(true);
     const history = useHistory();
 
     useEffect(() => {
         tweetService
-            .getTweets()
+            .getTweets(userid)
             .then((tweets) => setTweets([...tweets]))
             .catch(onError);
     }, [tweetService]);
@@ -44,12 +45,23 @@ const Tweets = React.memo(({ tweetService, userid, writable = false }: Props) =>
         }, 3000);
     };
 
+    const onWriterClose = () => {
+        setShowWriter(false);
+    };
+
     const onUserIdClick = (tweet: Tweet) => history.push(`/${tweet.userid}`);
 
     return (
         <>
             {!writable && userid && <UserProfile userid={userid} />}
-            {writable && <TweetWriter tweetService={tweetService} onCreate={onCreate} onError={onError} />}
+            {writable && showWriter && (
+                <TweetWriter
+                    onWriterClose={onWriterClose}
+                    tweetService={tweetService}
+                    onCreate={onCreate}
+                    onError={onError}
+                />
+            )}
             {error && <Message text={error} isAlert={true} />}
             {tweets.length === 0 && <p className='tweets-empty'>No Tweets Yet</p>}
             <ul className={styles.tweetsContainer}>

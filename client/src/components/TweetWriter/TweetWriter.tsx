@@ -3,15 +3,15 @@ import Button from "../Button/Button";
 import { ITweetService } from "../../services/tweet";
 import { Tweet } from "../../model/model";
 import styles from "./TweetWriter.module.scss";
-import Divider from "../Divider/Divider";
 
 type Props = {
     tweetService: ITweetService;
     onCreate: (tweet: Tweet) => void;
     onError: (error: Error) => void;
+    onWriterClose: () => void;
 };
 
-const TweetWriter = ({ tweetService, onCreate, onError }: Props) => {
+const TweetWriter = ({ tweetService, onCreate, onError, onWriterClose }: Props) => {
     const [tweet, setTweet] = useState<string>("");
 
     const onSubmit = async (event: React.FormEvent) => {
@@ -40,7 +40,10 @@ const TweetWriter = ({ tweetService, onCreate, onError }: Props) => {
                     autoFocus
                     onChange={onChange}
                 />
-                <Button type='submit'>Submit</Button>
+                <div className={styles.buttonContainer}>
+                    <Button type='submit'>Tweet</Button>
+                    <Button onClick={() => onWriterClose()}>Cancel</Button>
+                </div>
             </form>
         </section>
     );
