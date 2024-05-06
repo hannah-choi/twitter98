@@ -28,7 +28,9 @@ form {
     }
 }
 
-.field {
-    display: flex;
-    flex-wrap: wrap;
+fieldset {
+    .field {
+        display: flex;
+        flex-wrap: wrap;
+    }
 }

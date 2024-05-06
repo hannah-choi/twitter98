@@ -27,12 +27,6 @@ function App({ tweetService }: Props) {
                     <Route exact path='/:userid'>
                         <UserTweets tweetService={tweetService} />
                     </Route>
-                    <Route exact path='/login'>
-                        <Login />
-                    </Route>
-                    <Route exact path='/register'>
-                        <Register />
-                    </Route>
                 </main>
             </Switch>
         </div>
