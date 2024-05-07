@@ -28,19 +28,19 @@ let tweets: Tweet[] = [
     }
 ];
 
-export function getAll() {
+export async function getAll() {
     return tweets;
 }
 
-export function getByTweetId(id: string) {
+export async function getByTweetId(id: string) {
     return tweets.filter((tweet) => tweet.id === parseInt(id, 10));
 }
 
-export function getAllByUserid(userid: string) {
+export async function getAllByUserid(userid: string) {
     return tweets.filter((tweet) => tweet.userid === userid);
 }
 
-export function create(text: string, userid: string, url: string, nickname: string) {
+export async function create(text: string, userid: string, url: string, nickname: string) {
     const newTweet = {
         text,
         userid,
@@ -54,12 +54,12 @@ export function create(text: string, userid: string, url: string, nickname: stri
     return newTweet;
 }
 
-export function remove(id: string) {
+export async function remove(id: string) {
     tweets = tweets.filter((tweet) => tweet.id !== parseInt(id, 10));
     return;
 }
 
-export function update(id: string, text: string) {
+export async function update(id: string, text: string) {
     const tweet = tweets.find((tweet) => tweet.id !== parseInt(id, 10));
     if (tweet) {
         tweet.text = text;
