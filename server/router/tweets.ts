@@ -1,42 +1,12 @@
 import { Router, Request, Response, NextFunction } from "express";
-import moment from "moment";
-import { Tweet } from "../model/schema";
+import * as tweetDB from "../data/tweet";
 
 const router = Router();
 
-let dummyTweets: Tweet[] = [
-    {
-        id: 1,
-        text: "lorem ipsum",
-        created: "21 Sun",
-        nickname: "Lobo",
-        userid: "lobo",
-        url: ""
-    },
-    {
-        id: 2,
-        text: "sit dolor amet",
-        created: "21 Sun",
-        nickname: "Lobo",
-        userid: "lobo",
-        url: ""
-    },
-    {
-        id: 3,
-        text: "uno dos tres cuatro",
-        created: "22 Sun",
-        nickname: "Nana",
-        userid: "nana",
-        url: ""
-    }
-];
-
 router.get("/", (req: Request, res: Response) => {
     try {
-        const userid = req.query.userid;
-
-        const data = userid ? dummyTweets.filter((tweet) => tweet.userid === req.query.userid) : dummyTweets;
-
+        const userid = (req.query.userid as string) || undefined;
+        const data = userid ? tweetDB.getAllByUserid(userid) : tweetDB.getAll();
         res.status(200).json(data);
     } catch (err) {
         console.error(err);
@@ -47,7 +17,7 @@ router.get("/", (req: Request, res: Response) => {
 router.get("/:id", (req: Request, res: Response) => {
     const { id } = req.params;
     try {
-        const tweet = dummyTweets.find((tweet) => tweet.id === parseInt(id, 10));
+        const tweet = tweetDB.getByTweetId(id);
         res.status(200).send(tweet);
     } catch (err) {
         console.log(err);
@@ -57,17 +27,9 @@ router.get("/:id", (req: Request, res: Response) => {
 
 router.post("/", (req: Request, res: Response) => {
     const { text, userid, url, nickname } = req.body;
-    const newTweet = {
-        text,
-        userid,
-        url,
-        nickname,
-        id: dummyTweets.length + 1,
-        created: moment().startOf("hour").fromNow()
-    };
 
     try {
-        dummyTweets = [newTweet, ...dummyTweets];
+        const newTweet = tweetDB.create(text, userid, url, nickname);
         res.status(201).json(newTweet);
     } catch (err) {
         console.log(err);
@@ -79,7 +41,7 @@ router.post("/", (req: Request, res: Response) => {
 router.delete(`/:id`, (req: Request, res: Response) => {
     const { id } = req.params;
     try {
-        dummyTweets = dummyTweets.filter((tweet) => tweet.id !== parseInt(id, 10));
+        tweetDB.remove(id);
         res.sendStatus(204);
     } catch (err) {
         console.log(err);
@@ -90,10 +52,9 @@ router.delete(`/:id`, (req: Request, res: Response) => {
 router.put(`/:id`, (req: Request, res: Response) => {
     const { id } = req.params;
     const { text } = req.body;
-    const tweet = dummyTweets.find((tweet) => tweet.id === parseInt(id, 10));
+    const tweet = tweetDB.update(id, text);
 
     if (tweet) {
-        tweet.text = text;
         return res.status(200).json(tweet);
     } else {
         res.status(404).send({ message: `cannot find tweet id: ${id}` });
