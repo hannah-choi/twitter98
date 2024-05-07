@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createTweet, deleteTweet, getTweets, getTweetsById, updateTweet } from "../controller/tweetController";
+import { createTweet, deleteTweet, getTweets, updateTweet, getTweetsById } from "../controller/tweetController";
 
 const router = Router();
 
