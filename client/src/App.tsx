@@ -7,8 +7,6 @@ import AllTweets from "./pages/AllTweets";
 import UserTweets from "./pages/UserTweets";
 import classNames from "classnames";
 import styles from "./App.module.scss";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
 import { useAuth } from "./context/Auth";
 
 type Props = {

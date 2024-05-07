@@ -1,5 +1,4 @@
 import { Tweet } from "../model/model";
-import moment from "moment";
 
 export interface ITweetService {
     getTweets: (userid?: string) => Promise<Tweet[]>;
@@ -15,75 +14,65 @@ export default class TweetService implements ITweetService {
         this._url = url;
     }
 
-    tweets: Tweet[] = [
-        {
-            id: 1,
-            text: "lorem ipsum",
-            created: "21 Sun",
-            nickname: "Lobo",
-            userid: "lobo",
-            url: ""
-        },
-        {
-            id: 2,
-            text: "sit dolor amet",
-            created: "21 Sun",
-            nickname: "Ashcona",
-            userid: "orangejuice1234",
-            url: ""
-        },
-        {
-            id: 3,
-            text: "uno dos tres cuatro",
-            created: "22 Sun",
-            nickname: "Nana",
-            userid: "nana",
-            url: ""
-        },
-        {
-            id: 4,
-            text: "Just a perfect day. Drink sangria in a park, And then later When it gets dark we go home.",
-            created: "22 Sun",
-            nickname: "Miguel",
-            userid: "miguel_1234",
-            url: ""
-        },
-        {
-            id: 5,
-            text: "미안해 솔직하지 못한 내가 지금 이 순간이 꿈이라면 살며시 너에게로 다가와 모든걸 고백할텐데",
-            created: "22 Sun",
-            nickname: "세일러문",
-            userid: "sailor_1234",
-            url: ""
-        }
-    ];
-
     async getTweets(userid?: string) {
-        return userid ? this.tweets.filter((tweet) => tweet.userid === userid) : this.tweets;
+        const query = userid ? `?userid=${userid}` : "";
+        const res = await fetch(`${this._url}/tweets${query}`, {
+            method: "GET",
+            headers: { "Content-Type": "application/json" }
+        });
+        const data = await res.json();
+
+        if (res.status !== 200) {
+            throw new Error(data.message);
+        }
+
+        return data;
     }
 
     async writeTweet(text: string) {
-        const newTweet = {
-            id: Math.random(),
-            created: moment().startOf("hour").fromNow(),
-            nickname: "Lobo",
-            userid: "lobo",
-            text
-        };
-        this.tweets.push(newTweet);
-        return newTweet;
+        const res = await fetch(`${this._url}/tweets`, {
+            method: "POST",
+            body: JSON.stringify({
+                text,
+                userid: "lobo",
+                url: "http://foo",
+                nickname: "Lobo"
+            }),
+            headers: { "Content-Type": "application/json" }
+        });
+        const data = await res.json();
+
+        if (res.status !== 201) {
+            throw new Error(data.message);
+        }
+        return data;
     }
 
     async deleteTweet(tweetId: number) {
-        this.tweets = this.tweets.filter((tweet) => tweet.id !== tweetId);
+        const res = await fetch(`${this._url}/tweets/${tweetId}`, {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" }
+        });
+
+        if (res.status !== 204) {
+            throw new Error("Could not delete the tweet");
+        }
     }
 
     async updateTweet(tweetId: number, text: string) {
-        const tweet = this.tweets.find((tweet) => tweet.id === tweetId);
-        if (!tweet) {
-            throw new Error(`Cannot find matching tweet with id ${tweetId}`);
+        const res = await fetch(`${this._url}/tweets/${tweetId}`, {
+            method: "PUT",
+            body: JSON.stringify({
+                text
+            }),
+            headers: { "Content-Type": "application/json" }
+        });
+        const data = await res.json();
+
+        if (res.status !== 200) {
+            throw new Error(data.message);
         }
-        tweet.text = text;
-        return tweet;
+
+        return data;
     }
 }
