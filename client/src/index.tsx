@@ -7,8 +7,7 @@ import TweetService from "./services/tweet";
 import AuthService, { AuthErrorEventBus } from "./services/auth";
 import { AuthProvider } from "./context/Auth";
 
-const baseURL = process.env.REACT_APP_BASE_URL!;
-const tweetService = new TweetService(baseURL);
+const tweetService = new TweetService();
 const authService = new AuthService();
 const authErrorEventBus = new AuthErrorEventBus();
 

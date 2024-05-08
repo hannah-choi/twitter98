@@ -40,7 +40,7 @@ export const deleteTweet: RequestHandler = async (req: Request, res: Response) =
     const { id } = req.params;
     try {
         await tweetDB.remove(id);
-        res.sendStatus(204);
+        res.status(204).json("success");
     } catch (err) {
         console.log(err);
         res.status(500);
