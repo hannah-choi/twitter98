@@ -6,8 +6,10 @@ import { BrowserRouter } from "react-router-dom";
 import TweetService from "./services/tweet";
 import AuthService, { AuthErrorEventBus } from "./services/auth";
 import { AuthProvider } from "./context/Auth";
+import { HttpHelper } from "./network/http";
 
-const tweetService = new TweetService();
+const httpHelper = new HttpHelper(process.env.REACT_APP_BASE_URL!);
+const tweetService = new TweetService(httpHelper);
 const authService = new AuthService();
 const authErrorEventBus = new AuthErrorEventBus();
 

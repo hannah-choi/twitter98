@@ -53,20 +53,20 @@ export const TweetCard = React.memo(({ tweet, onDelete, onUpdate, onUserIdClick 
                 <div className={styles.contentsContainer}>
                     <section>
                         <article className={styles.infoContainer}>
-                            <p>
+                            <div>
                                 <LangFontConverter type='nickname-small'>
                                     <span className={styles.nickname} onClick={() => onUserIdClick(tweet)}>
                                         {nickname}
                                     </span>
                                 </LangFontConverter>
                                 <span className={styles.userid}>@{userid}</span>
-                            </p>
+                            </div>
                             <span className={styles.created}>{created}</span>
                         </article>
                         {!editMode && (
-                            <p className={styles.tweetbody}>
+                            <div className={styles.tweetbody}>
                                 <LangFontConverter>{text}</LangFontConverter>
-                            </p>
+                            </div>
                         )}
                     </section>
                     <section className={styles.buttonContainer}>
