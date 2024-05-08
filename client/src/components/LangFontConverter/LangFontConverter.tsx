@@ -34,8 +34,6 @@ const LangFontConverter = ({ children, type = "body" }: Props) => {
         fontWeight: `${type !== "body" ? "bold" : "500"}`
     };
 
-    console.log("Computed Font Size for type:", type, "is:", getFontSize());
-
     return <p style={computedStyle}>{children}</p>;
 };
 
