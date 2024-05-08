@@ -3,6 +3,7 @@ import Button from "../Button/Button";
 import { ITweetService } from "../../services/tweet";
 import { Tweet } from "../../model/model";
 import styles from "./TweetWriter.module.scss";
+import ButtonContainer from "../ButtonContainer/ButtonContainer";
 
 type Props = {
     tweetService: ITweetService;
@@ -40,10 +41,7 @@ const TweetWriter = ({ tweetService, onCreate, onError, onWriterClose }: Props) 
                     autoFocus
                     onChange={onChange}
                 />
-                <div className={styles.buttonContainer}>
-                    <Button type='submit'>Tweet</Button>
-                    <Button onClick={() => onWriterClose()}>Cancel</Button>
-                </div>
+                <ButtonContainer onClose={onWriterClose} className={styles.buttonContainer} submitText='Tweet' />
             </form>
         </section>
     );

@@ -60,7 +60,7 @@ export async function remove(id: string) {
 }
 
 export async function update(id: string, text: string) {
-    const tweet = tweets.find((tweet) => tweet.id !== parseInt(id, 10));
+    const tweet = tweets.find((tweet) => tweet.id === parseInt(id, 10));
     if (tweet) {
         tweet.text = text;
     }

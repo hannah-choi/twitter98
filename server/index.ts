@@ -15,10 +15,6 @@ app.use(morgan("tiny"));
 app.use(helmet());
 app.use(cors());
 
-app.get("/", (req: Request, res: Response) => {
-    res.send("hola");
-});
-
 app.use("/tweets", tweetRouter);
 
 app.use((req: Request, res: Response, next: NextFunction) => {

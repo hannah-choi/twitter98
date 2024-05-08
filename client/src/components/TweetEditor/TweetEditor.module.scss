@@ -1,0 +1,16 @@
+.tweetEditor {
+    width: 100%;
+    margin-top: -0.4rem;
+
+    input[type="text"] {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+}
+
+.buttonContainer {
+    float: right;
+    button:first-of-type {
+        margin-right: 0.3rem;
+    }
+}
