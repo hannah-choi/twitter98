@@ -1,4 +1,5 @@
 import { User } from "../model/model";
+import { IHttp } from "../network/http";
 
 export type AuthCredential = Pick<User, "userid" | "token">;
 
@@ -37,18 +38,30 @@ export class AuthErrorEventBus implements IAuthErrorEventBus {
 }
 
 export default class AuthService implements IAuthService {
+    private http;
+    private token?: string;
+
+    constructor(http: IHttp) {
+        this.http = http;
+    }
+
     async login(userid: string, password: string) {
-        return {
-            userid: "lobo",
-            token: "atun123"
-        };
+        return this.http.fetch("/auth/login", {
+            method: "POST",
+            body: JSON.stringify({
+                userid,
+                password
+            })
+        });
     }
 
     async me() {
-        return {
-            userid: "lobo",
-            token: "atun123"
-        };
+        return this.http.fetch("auth/me", {
+            method: "GET",
+            headers: {
+                authorization: `bearer ${this.token}`
+            }
+        });
     }
 
     async logout() {
@@ -64,9 +77,19 @@ export default class AuthService implements IAuthService {
         bg?: string,
         bio?: string
     ) {
-        return {
-            userid: "lobo",
-            token: "atun123"
-        };
+        const data = await this.http.fetch("/auth/register", {
+            method: "POST",
+            body: JSON.stringify({
+                userid,
+                password,
+                nickname,
+                email,
+                avatar,
+                bg,
+                bio
+            })
+        });
+        this.token = data.token;
+        return data;
     }
 }
