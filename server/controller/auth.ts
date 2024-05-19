@@ -2,53 +2,57 @@ import { Request, Response, RequestHandler, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import * as userDB from "../data/user";
 import bcrypt from "bcrypt";
+import { CustomRequest } from "../middleware/authenticator";
 
-const secret = "}k4R8Pfe@)NOd!}'2{3@(@W[kQu9^u4b";
+//
+export const secret = "}k4R8Pfe@)NOd!}'2{3@(@W[kQu9^u4b";
+const salt = 10;
+const expirySeconds = 300000;
+//
 
 export const registerUser: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        const userid = await userDB.registerUser(req.body);
-        res.status(200).json({ userid });
-    } catch (err) {
-        res.status(401).send("Cannot register the user, please try again later");
+    const { userid, password, nickname, email, bio, avatar, bg } = req.body;
+    const isUserExists = await userDB.findUserByUserid(userid);
+
+    if (isUserExists) {
+        return res.status(409).json({ message: `${userid} already exists` });
     }
+
+    const hashed = await bcrypt.hash(password, salt);
+    const id = await userDB.addUser({ userid, password: hashed, nickname, email, bio, avatar, bg });
+
+    res.status(201).json({ userid, token: generateToken(userid) });
 };
 
 export const loginUser: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
     const { userid, password } = req.body;
 
-    try {
-        const foundUser = await userDB.loginUser(userid, password);
-        if (foundUser && (await bcrypt.compare(password, foundUser.password))) {
-            return res.status(200).json({
-                userid,
-                token: jwt.sign(
-                    {
-                        id: foundUser.id
-                    },
-                    secret,
-                    { expiresIn: 300000 }
-                )
-            });
-        } else {
-            res.status(401).send("Id and password does not match, try again");
-        }
-    } catch (err) {
-        return res.status(401).send("Id and password does not match, try again");
+    const foundUser = await userDB.findUserByUserid(userid);
+    if (foundUser && (await bcrypt.compare(password, foundUser.password))) {
+        return res.status(200).json({
+            userid,
+            token: generateToken(foundUser.userid)
+        });
+    } else {
+        res.status(401).send("Id and password does not match, try again");
     }
 };
 
 export const verifyUser: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
-    const token = req.headers.authorization!.split(" ")[1];
-    if (!token) {
-        return res.sendStatus(400);
+    const user = await userDB.findUserByUserid((req as CustomRequest).userid);
+    if (!user) {
+        return res.sendStatus(401);
     }
 
-    jwt.verify(token, secret, (err) => {
-        if (err) {
-            return res.status(401).send(err);
-        }
-    });
+    res.status(200).json({ token: (req as CustomRequest).token, username: user.userid });
+};
 
-    res.sendStatus(200);
+const generateToken = (userid: string) => {
+    return jwt.sign(
+        {
+            userid
+        },
+        secret,
+        { expiresIn: expirySeconds }
+    );
 };

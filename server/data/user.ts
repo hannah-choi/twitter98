@@ -7,18 +7,16 @@ const users: User[] = [
         nickname: "Lobo",
         email: "croissant@atun.com",
         password: "1234",
-        bio: "13 y.o siamese",
-        token: undefined
+        bio: "13 y.o siamese"
     }
 ];
 
-export async function registerUser(user: User) {
-    const newUser = { ...user, id: users.length + 1 };
+export async function addUser(user: Omit<User, "id">) {
+    const newUser = { ...user, id: Math.random() };
     users.push(newUser);
     return newUser.userid;
 }
 
-export async function loginUser(userid: string, password: string) {
-    const foundUser = users.find((user) => user.userid === userid);
-    return { id: foundUser!.id, password: foundUser!.password };
+export async function findUserByUserid(userid: string) {
+    return users.find((user) => user.userid === userid);
 }

@@ -16,5 +16,4 @@ export interface User {
     bio?: string;
     avatar?: string;
     bg?: string;
-    token: undefined | string;
 }
