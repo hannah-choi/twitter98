@@ -1,10 +1,11 @@
 import { Router } from "express";
 import * as authController from "../controller/auth";
+import { encrypt } from "../middleware/encrypt";
 
 const router = Router();
 
 // POST /register
-router.post("/register", authController.registerUser);
+router.post("/register", encrypt, authController.registerUser);
 
 // POST /login
 router.post("/login", authController.loginUser);

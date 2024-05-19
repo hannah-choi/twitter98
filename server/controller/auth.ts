@@ -1,47 +1,40 @@
-import { Request, Response, RequestHandler } from "express";
-import bcrypt from "bcrypt";
+import { Request, Response, RequestHandler, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import { User } from "../model/schema";
-
-const users: User[] = [
-    {
-        id: 1,
-        userid: "lobo",
-        nickname: "Lobo",
-        email: "croissant@atun.com",
-        password: "1234",
-        bio: "13 y.o siamese",
-        token: undefined
-    }
-];
+import * as userDB from "../data/user";
+import bcrypt from "bcrypt";
 
 const secret = "}k4R8Pfe@)NOd!}'2{3@(@W[kQu9^u4b";
 
 export const registerUser: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
-    const newUser = { ...req.body, id: users.length + 1, password: await bcrypt.hash(req.body.password, 10) };
-    users.push(newUser);
-    res.status(200).json({
-        userid: newUser.userid
-    });
+    try {
+        const userid = await userDB.registerUser(req.body);
+        res.status(200).json({ userid });
+    } catch (err) {
+        res.status(401).send("Cannot register the user, please try again later");
+    }
 };
 
 export const loginUser: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
     const { userid, password } = req.body;
 
-    const user = users.find((user) => user.userid === userid);
-    if (user && (await bcrypt.compare(password, user.password))) {
-        return res.status(200).json({
-            userid: user.userid,
-            token: jwt.sign(
-                {
-                    id: user.id
-                },
-                secret,
-                { expiresIn: 300000 }
-            )
-        });
-    } else {
-        return res.status(401).send("Userid and password does not match, try again");
+    try {
+        const foundUser = await userDB.loginUser(userid, password);
+        if (foundUser && (await bcrypt.compare(password, foundUser.password))) {
+            return res.status(200).json({
+                userid,
+                token: jwt.sign(
+                    {
+                        id: foundUser.id
+                    },
+                    secret,
+                    { expiresIn: 300000 }
+                )
+            });
+        } else {
+            res.status(401).send("Id and password does not match, try again");
+        }
+    } catch (err) {
+        return res.status(401).send("Id and password does not match, try again");
     }
 };
 
