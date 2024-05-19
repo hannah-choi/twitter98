@@ -1,6 +1,7 @@
 import express, { Express, NextFunction, Request, Response } from "express";
 import dotenv from "dotenv";
 import tweetRouter from "./router/tweets";
+import authRouter from "./router/auth";
 import morgan from "morgan";
 import cors from "cors";
 import helmet from "helmet";
@@ -16,6 +17,7 @@ app.use(helmet());
 app.use(cors());
 
 app.use("/tweets", tweetRouter);
+app.use("/auth", authRouter);
 
 app.use((req: Request, res: Response, next: NextFunction) => {
     res.sendStatus(404);

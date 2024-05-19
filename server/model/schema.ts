@@ -6,3 +6,15 @@ export interface Tweet {
     userid: string;
     url?: string;
 }
+
+export interface User {
+    id: number;
+    userid: string;
+    nickname: string;
+    email: string;
+    password: string;
+    bio?: string;
+    avatar?: string;
+    bg?: string;
+    token: undefined | string;
+}
