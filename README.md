@@ -69,3 +69,19 @@
     userid: string
 }
 ```
+
+---
+
+`GET` /auth/verify
+
+**Request**
+
+```
+headers: {
+    authorization: string
+}
+```
+
+**Response**
+
+`200`
