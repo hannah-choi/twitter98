@@ -15,12 +15,12 @@ import TweetEditor from "../TweetEditor/TweetEditor";
 type Props = {
     tweet: Tweet;
     onDelete: (tweetId: number) => void;
-    onUserIdClick: (tweet: Tweet) => void;
+    onUsernameClick: (tweet: Tweet) => void;
     onUpdate: (tweetId: number, text: string) => void;
 };
 
-export const TweetCard = React.memo(({ tweet, onDelete, onUpdate, onUserIdClick }: Props) => {
-    const { userid, nickname, url, text, created } = tweet;
+export const TweetCard = React.memo(({ tweet, onDelete, onUpdate, onUsernameClick }: Props) => {
+    const { username, nickname, url, text, created } = tweet;
     const [showTooltip, setShowTooptip] = useState<boolean>(false);
     const [editMode, setEditMode] = useState<boolean>(false);
 
@@ -55,11 +55,11 @@ export const TweetCard = React.memo(({ tweet, onDelete, onUpdate, onUserIdClick 
                         <article className={styles.infoContainer}>
                             <div>
                                 <LangFontConverter type='nickname-small'>
-                                    <span className={styles.nickname} onClick={() => onUserIdClick(tweet)}>
+                                    <span className={styles.nickname} onClick={() => onUsernameClick(tweet)}>
                                         {nickname}
                                     </span>
                                 </LangFontConverter>
-                                <span className={styles.userid}>@{userid}</span>
+                                <span className={styles.username}>@{username}</span>
                             </div>
                             <span className={styles.created}>{created}</span>
                         </article>

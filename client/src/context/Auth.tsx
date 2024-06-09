@@ -20,7 +20,7 @@ type Props = {
 type AuthContextType = {
     user: AuthCredential | undefined;
     signUp: (
-        userid: string,
+        username: string,
         password: string,
         nickname: string,
         email: string,
@@ -28,7 +28,7 @@ type AuthContextType = {
         bg?: string,
         bio?: string
     ) => Promise<void>;
-    logIn: (userid: string, password: string) => Promise<void>;
+    logIn: (username: string, password: string) => Promise<void>;
     logout: () => Promise<void>;
 };
 
@@ -54,7 +54,7 @@ export function AuthProvider({ authService, authErrorEventBus, children }: Props
 
     const signUp = useCallback(
         async (
-            userid: string,
+            username: string,
             password: string,
             nickname: string,
             email: string,
@@ -63,13 +63,14 @@ export function AuthProvider({ authService, authErrorEventBus, children }: Props
             bio?: string
         ) =>
             authService
-                .register(userid, password, nickname, email, avatar, bg, bio)
+                .register(username, password, nickname, email, avatar, bg, bio)
                 .then((user: AuthCredential) => setUser(user)),
         [authService]
     );
 
     const logIn = useCallback(
-        async (userid: string, password: string) => authService.login(userid, password).then((user) => setUser(user)),
+        async (username: string, password: string) =>
+            authService.login(username, password).then((user) => setUser(user)),
         [authService]
     );
 

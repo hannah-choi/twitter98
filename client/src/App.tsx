@@ -22,7 +22,7 @@ function App({ tweetService }: Props) {
     };
 
     const onMyTweets = () => {
-        history.push(`/${user?.userid}`);
+        history.push(`/${user?.username}`);
     };
 
     const onLogout = () => {
@@ -41,7 +41,7 @@ function App({ tweetService }: Props) {
                     <Route exact path='/'>
                         <AllTweets tweetService={tweetService} />
                     </Route>
-                    <Route exact path='/:userid'>
+                    <Route exact path='/:username'>
                         <UserTweets tweetService={tweetService} />
                     </Route>
                 </main>

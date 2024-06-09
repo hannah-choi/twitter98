@@ -3,8 +3,8 @@ import * as tweetDB from "../data/tweet";
 
 export const getTweets: RequestHandler = async (req: Request, res: Response) => {
     try {
-        const userid = (req.query.userid as string) || undefined;
-        const data = await (userid ? tweetDB.getAllByUserid(userid) : tweetDB.getAll());
+        const username = (req.query.username as string) || undefined;
+        const data = await (username ? tweetDB.getAllByUsername(username) : tweetDB.getAll());
         res.status(200).json(data);
     } catch (err) {
         console.error(err);
@@ -24,10 +24,10 @@ export const getTweetsById: RequestHandler = async (req: Request, res: Response)
 };
 
 export const createTweet: RequestHandler = async (req: Request, res: Response) => {
-    const { text, userid, url, nickname } = req.body;
+    const { text, username, url, nickname } = req.body;
 
     try {
-        const newTweet = await tweetDB.create(text, userid, url, nickname);
+        const newTweet = await tweetDB.create(text, username, url, nickname);
         res.status(201).json(newTweet);
     } catch (err) {
         console.log(err);

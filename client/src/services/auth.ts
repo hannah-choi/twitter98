@@ -1,14 +1,14 @@
 import { User } from "../model/model";
 import { IHttp } from "../network/http";
 
-export type AuthCredential = Pick<User, "userid" | "token">;
+export type AuthCredential = Pick<User, "username" | "token">;
 
 export interface IAuthService {
-    login: (userid: string, password: string) => Promise<AuthCredential>;
+    login: (username: string, password: string) => Promise<AuthCredential>;
     me: () => Promise<AuthCredential>;
     logout: () => Promise<void>;
     register: (
-        userid: string,
+        username: string,
         password: string,
         nickname: string,
         email: string,
@@ -45,11 +45,11 @@ export default class AuthService implements IAuthService {
         this.http = http;
     }
 
-    async login(userid: string, password: string) {
+    async login(username: string, password: string) {
         return this.http.fetch("/auth/login", {
             method: "POST",
             body: JSON.stringify({
-                userid,
+                username,
                 password
             })
         });
@@ -69,7 +69,7 @@ export default class AuthService implements IAuthService {
     }
 
     async register(
-        userid: string,
+        username: string,
         password: string,
         nickname: string,
         email: string,
@@ -80,7 +80,7 @@ export default class AuthService implements IAuthService {
         const data = await this.http.fetch("/auth/register", {
             method: "POST",
             body: JSON.stringify({
-                userid,
+                username,
                 password,
                 nickname,
                 email,

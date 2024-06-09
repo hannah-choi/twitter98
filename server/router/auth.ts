@@ -7,14 +7,14 @@ import { authenticate } from "../middleware/authenticator";
 const router = Router();
 
 const validateEssential = [
-    body("userid").trim().isLength({ min: 3, max: 12 }).withMessage("Userid should be minimum 5 characters"),
+    body("username").trim().isLength({ min: 3, max: 12 }).withMessage("Username should be minimum 5 characters"),
     body("password").trim().isLength({ min: 8, max: 16 }).withMessage("Password should be at least 8 characters"),
     validate
 ];
 
 const validateRegister = [
     ...validateEssential,
-    body("nickname").trim().isLength({ min: 3 }).withMessage("Userid should be minimum 5 characters"),
+    body("nickname").trim().isLength({ min: 3 }).withMessage("Username should be minimum 5 characters"),
     body("email").trim().isEmail().normalizeEmail().withMessage("Invalid email address"),
     validate
 ];

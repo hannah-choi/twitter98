@@ -3,7 +3,7 @@ import { User } from "../model/schema";
 const users: User[] = [
     {
         id: 1,
-        userid: "lobo",
+        username: "lobo",
         nickname: "Lobo",
         email: "croissant@atun.com",
         password: "12345678",
@@ -17,8 +17,8 @@ export async function addUser(user: Omit<User, "id">) {
     return newUser.id;
 }
 
-export async function findUserByUserid(userid: string) {
-    return users.find((user) => user.userid === userid);
+export async function findUserByUsername(username: string) {
+    return users.find((user) => user.username === username);
 }
 
 export async function findUserById(id: number) {

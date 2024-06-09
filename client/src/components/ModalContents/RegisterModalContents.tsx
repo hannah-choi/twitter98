@@ -19,8 +19,8 @@ const RegisterModalContents = ({ setShowModal }: Props) => {
             <Header title='Register' simplified onClose={onClose} />
             <form className={styles.form}>
                 <p>
-                    <label>Userid</label>
-                    <input type='text' required {...register("userid")}></input>
+                    <label>Username</label>
+                    <input type='text' required {...register("username")}></input>
                 </p>
                 <p>
                     <label>Nickname</label>

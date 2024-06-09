@@ -11,11 +11,11 @@ import UserProfile from "../UserProfile/UserProfile";
 
 type Props = {
     tweetService: ITweetService;
-    userid?: string;
+    username?: string;
     writable?: boolean;
 };
 
-const Tweets = React.memo(({ tweetService, userid, writable = false }: Props) => {
+const Tweets = React.memo(({ tweetService, username, writable = false }: Props) => {
     const [tweets, setTweets] = useState<Tweet[]>([]);
     const [error, setError] = useState<string>("");
     const [showWriter, setShowWriter] = useState<boolean>(true);
@@ -23,7 +23,7 @@ const Tweets = React.memo(({ tweetService, userid, writable = false }: Props) =>
 
     useEffect(() => {
         tweetService
-            .getTweets(userid)
+            .getTweets(username)
             .then((tweets) => setTweets([...tweets]))
             .catch(onError);
     }, [tweetService]);
@@ -56,11 +56,11 @@ const Tweets = React.memo(({ tweetService, userid, writable = false }: Props) =>
         setShowWriter(false);
     };
 
-    const onUserIdClick = (tweet: Tweet) => history.push(`/${tweet.userid}`);
+    const onUsernameClick = (tweet: Tweet) => history.push(`/${tweet.username}`);
 
     return (
         <>
-            {!writable && userid && <UserProfile userid={userid} />}
+            {!writable && username && <UserProfile username={username} />}
             {writable && showWriter && (
                 <TweetWriter
                     onWriterClose={onWriterClose}
@@ -79,7 +79,7 @@ const Tweets = React.memo(({ tweetService, userid, writable = false }: Props) =>
                         tweet={tweet}
                         onDelete={onDelete}
                         onUpdate={onUpdate}
-                        onUserIdClick={onUserIdClick}
+                        onUsernameClick={onUsernameClick}
                     />
                 ))}
             </ul>

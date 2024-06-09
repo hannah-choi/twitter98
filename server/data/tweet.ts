@@ -7,7 +7,7 @@ let tweets: Tweet[] = [
         text: "lorem ipsum",
         created: "21 Sun",
         nickname: "Lobo",
-        userid: "lobo",
+        username: "lobo",
         url: ""
     },
     {
@@ -15,7 +15,7 @@ let tweets: Tweet[] = [
         text: "sit dolor amet",
         created: "21 Sun",
         nickname: "Lobo",
-        userid: "lobo",
+        username: "lobo",
         url: ""
     },
     {
@@ -23,7 +23,7 @@ let tweets: Tweet[] = [
         text: "uno dos tres cuatro",
         created: "22 Sun",
         nickname: "Nana",
-        userid: "nana",
+        username: "nana",
         url: ""
     }
 ];
@@ -36,14 +36,14 @@ export async function getByTweetId(id: string) {
     return tweets.filter((tweet) => tweet.id === parseInt(id, 10));
 }
 
-export async function getAllByUserid(userid: string) {
-    return tweets.filter((tweet) => tweet.userid === userid);
+export async function getAllByUsername(username: string) {
+    return tweets.filter((tweet) => tweet.username === username);
 }
 
-export async function create(text: string, userid: string, url: string, nickname: string) {
+export async function create(text: string, username: string, url: string, nickname: string) {
     const newTweet = {
         text,
-        userid,
+        username,
         url,
         nickname,
         id: tweets.length + 1,

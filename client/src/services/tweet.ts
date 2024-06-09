@@ -2,7 +2,7 @@ import { Tweet } from "../model/model";
 import { IHttp } from "../network/http";
 
 export interface ITweetService {
-    getTweets: (userid?: string) => Promise<Tweet[]>;
+    getTweets: (username?: string) => Promise<Tweet[]>;
     writeTweet: (text: string) => Promise<Tweet>;
     deleteTweet: (tweetId: number) => Promise<void>;
     updateTweet: (tweetId: number, text: string) => Promise<Tweet>;
@@ -15,8 +15,8 @@ export default class TweetService implements ITweetService {
         this.http = http;
     }
 
-    async getTweets(userid?: string) {
-        const query = userid ? `?userid=${userid}` : "";
+    async getTweets(username?: string) {
+        const query = username ? `?username=${username}` : "";
         return this.http.fetch(query, {
             method: "GET"
         });
@@ -27,7 +27,7 @@ export default class TweetService implements ITweetService {
             method: "POST",
             body: JSON.stringify({
                 text,
-                userid: "lobo",
+                username: "lobo",
                 url: "http://foo",
                 nickname: "Lobo"
             })

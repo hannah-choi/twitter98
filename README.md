@@ -7,7 +7,7 @@
 ```
 {
     id: number,
-    userid: string,
+    username: string,
     password: string,
     name: string,
     email: string,
@@ -25,7 +25,7 @@
 
 ```
 {
-    userid,
+    username,
     password,
     name,
     email,
@@ -42,7 +42,7 @@
 ```
 {
     token: string
-    userid: string
+    username: string
 }
 ```
 
@@ -54,7 +54,7 @@
 
 ```
 {
-    userid: string,
+    username: string,
     password: string
 }
 ```
@@ -66,7 +66,7 @@
 ```
 {
     token: string,
-    userid: string
+    username: string
 }
 ```
 

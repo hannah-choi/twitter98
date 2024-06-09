@@ -12,7 +12,7 @@ const validateTweet = [
 ];
 
 // GET /tweets
-// GET /tweets?userid=userid
+// GET /tweets?username=username
 router.get("/", tweetController.getTweets);
 
 // GET /tweets/:tweetid

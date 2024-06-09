@@ -9,7 +9,7 @@ import Header from "../components/Header/Header";
 
 type Props = {
     onRegister: (
-        userid: string,
+        username: string,
         password: string,
         nickname: string,
         email: string,
@@ -17,11 +17,11 @@ type Props = {
         bg?: string,
         bio?: string
     ) => Promise<void>;
-    onLogin: (userid: string, password: string) => Promise<void>;
+    onLogin: (username: string, password: string) => Promise<void>;
 };
 
 interface IFormInput {
-    userid: string;
+    username: string;
     password: string;
     nickname: string;
     email: string;
@@ -48,11 +48,11 @@ const Login = ({ onRegister, onLogin }: Props) => {
     };
 
     const onSubmit = (data: FieldValues) => {
-        const { userid, password, nickname, email, avatar, bg, bio } = data;
+        const { username, password, nickname, email, avatar, bg, bio } = data;
         if (signup) {
-            onRegister(userid, password, nickname, email, avatar, bg, bio).catch(setError);
+            onRegister(username, password, nickname, email, avatar, bg, bio).catch(setError);
         } else {
-            onLogin(userid, password).catch(setError);
+            onLogin(username, password).catch(setError);
         }
     };
 
@@ -64,8 +64,8 @@ const Login = ({ onRegister, onLogin }: Props) => {
                         <Header title={signup ? "Register" : "Login"} simplified closeDisabled />
                         <form onSubmit={handleSubmit((data) => onSubmit(data))}>
                             <p>
-                                <label>Userid</label>
-                                <input type='text' required {...register("userid")}></input>
+                                <label>Username</label>
+                                <input type='text' required {...register("username")}></input>
                             </p>
                             <p>
                                 <label>Password</label>

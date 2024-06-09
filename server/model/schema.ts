@@ -3,13 +3,13 @@ export interface Tweet {
     text: string;
     created: string;
     nickname: string;
-    userid: string;
+    username: string;
     url?: string;
 }
 
 export interface User {
     id: number;
-    userid: string;
+    username: string;
     nickname: string;
     email: string;
     password: string;

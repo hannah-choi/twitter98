@@ -2,9 +2,9 @@ import React from "react";
 import styles from "./UserProfile.module.scss";
 import LangFontConverter from "../LangFontConverter/LangFontConverter";
 
-type Props = { userid: string; url?: string };
+type Props = { username: string; url?: string };
 
-const UserProfile = ({ userid, url }: Props) => {
+const UserProfile = ({ username, url }: Props) => {
     return (
         <section className={styles.profile}>
             <article className={styles.bg} style={{ backgroundImage: `url(${"./images/bg.jpg"})` }} />
@@ -13,7 +13,7 @@ const UserProfile = ({ userid, url }: Props) => {
                 <LangFontConverter type='nickname-big'>
                     <p className={styles.nickname}>nickname</p>
                 </LangFontConverter>
-                <p className={styles.userId}>@{userid}</p>
+                <p className={styles.Username}>@{username}</p>
                 <LangFontConverter>
                     <p>Et Lorem consequat aute laborum magna culpa qui consectetur quis laborum.</p>
                 </LangFontConverter>
