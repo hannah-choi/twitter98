@@ -3,7 +3,7 @@ import { Tweet } from "../model/schema";
 
 let tweets: Tweet[] = [
     {
-        id: 1,
+        tweetID: 1,
         text: "lorem ipsum",
         created: "21 Sun",
         nickname: "Lobo",
@@ -11,7 +11,7 @@ let tweets: Tweet[] = [
         url: ""
     },
     {
-        id: 2,
+        tweetID: 2,
         text: "sit dolor amet",
         created: "21 Sun",
         nickname: "Lobo",
@@ -19,7 +19,7 @@ let tweets: Tweet[] = [
         url: ""
     },
     {
-        id: 3,
+        tweetID: 3,
         text: "uno dos tres cuatro",
         created: "22 Sun",
         nickname: "Nana",
@@ -32,8 +32,8 @@ export async function getAll() {
     return tweets;
 }
 
-export async function getByTweetId(id: string) {
-    return tweets.filter((tweet) => tweet.id === parseInt(id, 10));
+export async function getByTweetId(tweetID: string) {
+    return tweets.filter((tweet) => tweet.tweetID === parseInt(tweetID, 10));
 }
 
 export async function getAllByUsername(username: string) {
@@ -46,7 +46,7 @@ export async function create(text: string, username: string, url: string, nickna
         username,
         url,
         nickname,
-        id: tweets.length + 1,
+        tweetID: Math.floor(Math.random() * 100),
         created: moment().startOf("hour").fromNow()
     };
 
@@ -54,13 +54,13 @@ export async function create(text: string, username: string, url: string, nickna
     return newTweet;
 }
 
-export async function remove(id: string) {
-    tweets = tweets.filter((tweet) => tweet.id !== parseInt(id, 10));
+export async function remove(tweetID: string) {
+    tweets = tweets.filter((tweet) => tweet.tweetID !== parseInt(tweetID, 10));
     return;
 }
 
-export async function update(id: string, text: string) {
-    const tweet = tweets.find((tweet) => tweet.id === parseInt(id, 10));
+export async function update(tweetID: string, text: string) {
+    const tweet = tweets.find((tweet) => tweet.tweetID === parseInt(tweetID, 10));
     if (tweet) {
         tweet.text = text;
     }

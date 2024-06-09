@@ -6,7 +6,7 @@ const users: User[] = [
         username: "lobo",
         nickname: "Lobo",
         email: "croissant@atun.com",
-        password: "12345678",
+        password: "$2b$10$glHr.sU06WMOdS2r1IjZlOSBFTGEcfmJZYG.B90diQZFTPXHr/byq",
         bio: "13 y.o siamese"
     }
 ];

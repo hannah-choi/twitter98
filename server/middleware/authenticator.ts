@@ -31,7 +31,7 @@ export const authenticate: RequestHandler = async (req: Request, res: Response, 
         if (!user) {
             return res.sendStatus(401);
         }
-        (req as CustomRequestID).id = user.id; // register 'userid' 앞으로 이어지는 콜백에서 또 써야하는 데이터라면 이렇게 등록 가능
+        (req as CustomRequestID).id = user.id; // register 'id' 앞으로 이어지는 콜백에서 또 써야하는 데이터라면 이렇게 등록 가능
         next();
     });
 };
