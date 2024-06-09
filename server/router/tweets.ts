@@ -2,6 +2,7 @@ import { NextFunction, Request, Response, Router } from "express";
 import * as tweetController from "../controller/tweet";
 import { body, param, validationResult } from "express-validator";
 import { validate } from "../middleware/validator";
+import { authenticate } from "../middleware/authenticator";
 
 const router = Router();
 
@@ -18,12 +19,12 @@ router.get("/", tweetController.getTweets);
 router.get("/:id", tweetController.getTweetsById);
 
 // POST /tweets
-router.post("/", validateTweet, tweetController.createTweet);
+router.post("/", authenticate, validateTweet, tweetController.createTweet);
 
 // DELETE /tweets
-router.delete(`/:id`, tweetController.deleteTweet);
+router.delete(`/:id`, authenticate, tweetController.deleteTweet);
 
 // PUT /tweets
-router.put(`/:id`, validateTweet, tweetController.updateTweet);
+router.put(`/:id`, authenticate, validateTweet, tweetController.updateTweet);
 
 export default router;
