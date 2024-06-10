@@ -5,6 +5,7 @@ export interface Tweet {
     nickname: string;
     username: string;
     url?: string;
+    id: number;
 }
 
 export interface User {

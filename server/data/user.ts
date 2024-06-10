@@ -11,16 +11,16 @@ const users: User[] = [
     }
 ];
 
-export async function addUser(user: Omit<User, "id">) {
+export async function addUser(user: Omit<User, "id">): Promise<User["id"]> {
     const newUser = { ...user, id: Math.floor(Math.random() * 100) };
     users.push(newUser);
     return newUser.id;
 }
 
-export async function findUserByUsername(username: string) {
+export async function findUserByUsername(username: string): Promise<User | undefined> {
     return users.find((user) => user.username === username);
 }
 
-export async function findUserById(id: number) {
+export async function findUserById(id: number): Promise<User | undefined> {
     return users.find((user) => user.id === id);
 }

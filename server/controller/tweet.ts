@@ -15,7 +15,7 @@ export const getTweets: RequestHandler = async (req: Request, res: Response) => 
 export const getTweetsById: RequestHandler = async (req: Request, res: Response) => {
     const { id } = req.params;
     try {
-        const tweet = await tweetDB.getByTweetId(id);
+        const tweet = await tweetDB.getByTweetId(parseInt(id));
         res.status(200).send(tweet);
     } catch (err) {
         console.log(err);
@@ -24,10 +24,10 @@ export const getTweetsById: RequestHandler = async (req: Request, res: Response)
 };
 
 export const createTweet: RequestHandler = async (req: Request, res: Response) => {
-    const { text, username, url, nickname } = req.body;
+    const { text, id } = req.body;
 
     try {
-        const newTweet = await tweetDB.create(text, username, url, nickname);
+        const newTweet = await tweetDB.create(text, parseInt(id));
         res.status(201).json(newTweet);
     } catch (err) {
         console.log(err);
@@ -37,9 +37,9 @@ export const createTweet: RequestHandler = async (req: Request, res: Response) =
 };
 
 export const deleteTweet: RequestHandler = async (req: Request, res: Response) => {
-    const { tweetID } = req.params;
+    const { id } = req.params;
     try {
-        await tweetDB.remove(tweetID);
+        await tweetDB.remove(parseInt(id));
         res.sendStatus(204);
     } catch (err) {
         console.log(err);
@@ -48,13 +48,13 @@ export const deleteTweet: RequestHandler = async (req: Request, res: Response) =
 };
 
 export const updateTweet: RequestHandler = async (req: Request, res: Response) => {
-    const { tweetID } = req.params;
+    const { id } = req.params;
     const { text } = req.body;
-    const tweet = await tweetDB.update(tweetID, text);
+    const tweet = await tweetDB.update(parseInt(id), text);
 
     if (tweet) {
         return res.status(200).json(tweet);
     } else {
-        res.status(404).send({ message: `cannot find tweet id: ${tweetID}` });
+        res.status(404).send({ message: `cannot find tweet id: ${id}` });
     }
 };
