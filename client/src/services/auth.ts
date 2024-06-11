@@ -1,7 +1,7 @@
 import { User } from "../model/model";
 import { IHttp } from "../network/http";
 
-export type AuthCredential = Pick<User, "username" | "token">;
+export type AuthCredential = Pick<User, "id" | "token" | "username">;
 
 export interface IAuthService {
     login: (username: string, password: string) => Promise<AuthCredential>;
@@ -39,33 +39,9 @@ export class AuthErrorEventBus implements IAuthErrorEventBus {
 
 export default class AuthService implements IAuthService {
     private http;
-    private token?: string;
 
     constructor(http: IHttp) {
         this.http = http;
-    }
-
-    async login(username: string, password: string) {
-        return this.http.fetch("/auth/login", {
-            method: "POST",
-            body: JSON.stringify({
-                username,
-                password
-            })
-        });
-    }
-
-    async me() {
-        return this.http.fetch("auth/me", {
-            method: "GET",
-            headers: {
-                authorization: `bearer ${this.token}`
-            }
-        });
-    }
-
-    async logout() {
-        return;
     }
 
     async register(
@@ -89,7 +65,33 @@ export default class AuthService implements IAuthService {
                 bio
             })
         });
-        this.token = data.token;
+        localStorage.setItem("tweeterToken", data.token);
         return data;
+    }
+
+    async login(username: string, password: string) {
+        const data = await this.http.fetch("/auth/login", {
+            method: "POST",
+            body: JSON.stringify({
+                username,
+                password
+            })
+        });
+        localStorage.setItem("tweeterToken", data.token);
+        return data;
+    }
+
+    async me() {
+        return this.http.fetch("/auth/me", {
+            method: "GET",
+            headers: {
+                Authorization: `bearer ${localStorage.getItem("tweeterToken")}`
+            }
+        });
+    }
+
+    async logout() {
+        localStorage.removeItem("tweeterToken");
+        return;
     }
 }

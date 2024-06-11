@@ -3,9 +3,9 @@ import { IHttp } from "../network/http";
 
 export interface ITweetService {
     getTweets: (username?: string) => Promise<Tweet[]>;
-    writeTweet: (text: string) => Promise<Tweet>;
-    deleteTweet: (tweetId: number) => Promise<void>;
-    updateTweet: (tweetId: number, text: string) => Promise<Tweet>;
+    writeTweet: (text: string, id: number) => Promise<Tweet>;
+    deleteTweet: (tweetID: number) => Promise<void>;
+    updateTweet: (tweetID: number, text: string) => Promise<Tweet>;
 }
 
 export default class TweetService implements ITweetService {
@@ -17,35 +17,50 @@ export default class TweetService implements ITweetService {
 
     async getTweets(username?: string) {
         const query = username ? `?username=${username}` : "";
-        return this.http.fetch(query, {
-            method: "GET"
-        });
+        return this.http.fetch(
+            "/tweets" + query,
+            {
+                method: "GET"
+            },
+            localStorage.getItem("tweeterToken") || undefined
+        );
     }
 
-    async writeTweet(text: string) {
-        return this.http.fetch("", {
-            method: "POST",
-            body: JSON.stringify({
-                text,
-                username: "lobo",
-                url: "http://foo",
-                nickname: "Lobo"
-            })
-        });
+    async writeTweet(text: string, id: number) {
+        return this.http.fetch(
+            "/tweets",
+            {
+                method: "POST",
+                body: JSON.stringify({
+                    text,
+                    id
+                })
+            },
+            localStorage.getItem("tweeterToken") || undefined
+        );
     }
 
-    async deleteTweet(tweetId: number) {
-        return this.http.fetch(`/${tweetId}`, {
-            method: "DELETE"
-        });
+    async deleteTweet(tweetID: number) {
+        return this.http.fetch(
+            `/tweets/${tweetID}`,
+            {
+                method: "DELETE"
+            },
+            localStorage.getItem("tweeterToken") || undefined
+        );
     }
 
-    async updateTweet(tweetId: number, text: string) {
-        return this.http.fetch(`/${tweetId}`, {
-            method: "PUT",
-            body: JSON.stringify({
-                text
-            })
-        });
+    async updateTweet(tweetID: number, text: string) {
+        return this.http.fetch(
+            `/tweets/${tweetID}`,
+            {
+                method: "PUT",
+                body: JSON.stringify({
+                    tweetID,
+                    text
+                })
+            },
+            localStorage.getItem("tweeterToken") || undefined
+        );
     }
 }
