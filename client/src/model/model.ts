@@ -1,5 +1,5 @@
 export interface Tweet {
-    id: number;
+    tweetID: number;
     text: string;
     created: string;
     nickname: string;
@@ -11,6 +11,7 @@ export interface User {
     username: string;
     nickname: string;
     email: string;
+    id: number;
     password: string;
     bio?: string;
     avatar?: string;

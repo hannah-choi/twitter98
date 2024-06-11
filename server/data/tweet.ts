@@ -73,7 +73,7 @@ export async function create(text: string, id: number) {
     };
 
     tweets = [newTweet, ...tweets];
-    return getByTweetId(newTweet.id);
+    return getByTweetId(newTweet.tweetID);
 }
 
 export async function remove(tweetID: number) {
@@ -83,9 +83,11 @@ export async function remove(tweetID: number) {
 
 export async function update(tweetID: number, text: string) {
     const tweet = tweets.find((tweet) => tweet.tweetID === tweetID);
+
     if (tweet) {
         tweet.text = text;
+        return getByTweetId(tweet.tweetID);
+    } else {
+        console.log("cannot edit because cannot find the matching tweet");
     }
-
-    return tweet;
 }

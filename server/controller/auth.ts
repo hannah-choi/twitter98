@@ -21,7 +21,7 @@ export const registerUser: RequestHandler = async (req: Request, res: Response, 
     const hashed = await bcrypt.hash(password, salt);
     const id = await userDB.addUser({ username, password: hashed, nickname, email, bio, avatar, bg });
 
-    res.status(201).json({ username, token: generateToken(id) });
+    res.status(201).json({ id, username, token: generateToken(id) });
 };
 
 export const loginUser: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
@@ -30,6 +30,7 @@ export const loginUser: RequestHandler = async (req: Request, res: Response, nex
     const foundUser = await userDB.findUserByUsername(username);
     if (foundUser && (await bcrypt.compare(password, foundUser.password))) {
         return res.status(200).json({
+            id: foundUser.id,
             username,
             token: generateToken(foundUser.id)
         });

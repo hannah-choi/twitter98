@@ -10,7 +10,7 @@ import { HttpHelper } from "./network/http";
 
 const httpHelper = new HttpHelper(process.env.REACT_APP_BASE_URL!);
 const tweetService = new TweetService(httpHelper);
-const authService = new AuthService();
+const authService = new AuthService(httpHelper);
 const authErrorEventBus = new AuthErrorEventBus();
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);

@@ -4,6 +4,7 @@ import { ITweetService } from "../../services/tweet";
 import { Tweet } from "../../model/model";
 import styles from "./TweetWriter.module.scss";
 import ButtonContainer from "../ButtonContainer/ButtonContainer";
+import { useAuth } from "../../context/Auth";
 
 type Props = {
     tweetService: ITweetService;
@@ -13,12 +14,14 @@ type Props = {
 };
 
 const TweetWriter = ({ tweetService, onCreate, onError, onWriterClose }: Props) => {
+    const user = useAuth();
+
     const [tweet, setTweet] = useState<string>("");
 
     const onSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         tweetService
-            .writeTweet(tweet)
+            .writeTweet(tweet, user.user?.id!)
             .then((created) => {
                 setTweet("");
                 onCreate(created);

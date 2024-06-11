@@ -14,9 +14,9 @@ import TweetEditor from "../TweetEditor/TweetEditor";
 
 type Props = {
     tweet: Tweet;
-    onDelete: (tweetId: number) => void;
+    onDelete: (tweetID: number) => void;
     onUsernameClick: (tweet: Tweet) => void;
-    onUpdate: (tweetId: number, text: string) => void;
+    onUpdate: (tweetID: number, text: string) => void;
 };
 
 export const TweetCard = React.memo(({ tweet, onDelete, onUpdate, onUsernameClick }: Props) => {
@@ -28,7 +28,7 @@ export const TweetCard = React.memo(({ tweet, onDelete, onUpdate, onUsernameClic
         switch (e.target.value) {
             case "delete":
                 setShowTooptip(false);
-                onDelete(tweet.id);
+                onDelete(tweet.tweetID);
                 break;
             case "edit":
                 setShowTooptip(false);
