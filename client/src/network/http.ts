@@ -1,5 +1,5 @@
 export interface IHttp {
-    fetch: (url: string, config: RequestInit, token?: string) => Promise<any>;
+    fetch: (url: string, config: RequestInit) => Promise<any>;
 }
 
 export class HttpHelper implements IHttp {
@@ -9,12 +9,13 @@ export class HttpHelper implements IHttp {
         this.baseURL = baseURL;
     }
 
-    async fetch(url: string, config: RequestInit, token?: string) {
+    async fetch(url: string, config: RequestInit) {
         const res = await fetch(`${this.baseURL}${url}`, {
             ...config,
-            headers: token
-                ? { "Content-Type": "application/json", Authorization: `Bearer ${token}` }
-                : { "Content-Type": "application/json" }
+            headers: {
+                "Content-Type": "application/json",
+                ...config.headers
+            }
         });
 
         if (res.status === 204) {
