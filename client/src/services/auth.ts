@@ -1,5 +1,6 @@
 import { User } from "../model/model";
 import { IHttp } from "../network/http";
+import { TokenStorage } from "../store/token";
 
 export type AuthCredential = Pick<User, "id" | "token" | "username">;
 
@@ -39,9 +40,11 @@ export class AuthErrorEventBus implements IAuthErrorEventBus {
 
 export default class AuthService implements IAuthService {
     private http;
+    private tokenStorage;
 
-    constructor(http: IHttp) {
+    constructor(http: IHttp, tokenStorage: TokenStorage) {
         this.http = http;
+        this.tokenStorage = tokenStorage;
     }
 
     async register(
@@ -65,7 +68,7 @@ export default class AuthService implements IAuthService {
                 bio
             })
         });
-        localStorage.setItem("tweeterToken", data.token);
+        this.tokenStorage.saveToken(data.token);
         return data;
     }
 
@@ -77,21 +80,22 @@ export default class AuthService implements IAuthService {
                 password
             })
         });
-        localStorage.setItem("tweeterToken", data.token);
+        this.tokenStorage.saveToken(data.token);
         return data;
     }
 
     async me() {
+        const token = this.tokenStorage.getToken();
         return this.http.fetch("/auth/me", {
             method: "GET",
             headers: {
-                Authorization: `bearer ${localStorage.getItem("tweeterToken")}`
+                Authorization: `Bearer ${token}`
             }
         });
     }
 
     async logout() {
-        localStorage.removeItem("tweeterToken");
+        this.tokenStorage.clearToken();
         return;
     }
 }
