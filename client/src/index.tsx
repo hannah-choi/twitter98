@@ -10,8 +10,8 @@ import { HttpHelper } from "./network/http";
 import { TokenStorage } from "./store/token";
 
 const httpHelper = new HttpHelper(process.env.REACT_APP_BASE_URL!);
-const tweetService = new TweetService(httpHelper);
 const tokenStorage = new TokenStorage();
+const tweetService = new TweetService(httpHelper, tokenStorage);
 const authService = new AuthService(httpHelper, tokenStorage);
 const authErrorEventBus = new AuthErrorEventBus();
 

@@ -86,7 +86,7 @@ export default class AuthService implements IAuthService {
 
     async me() {
         const token = this.tokenStorage.getToken();
-        return this.http.fetch("/auth/me", {
+        return this.http.fetch("/auth/verify", {
             method: "GET",
             headers: {
                 Authorization: `Bearer ${token}`
